@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace FriendlyRAT.Core
 {
-    public interface ISystemControl
+    public interface ISystemControl : IDisposable
     {
         event EventHandler<RenderRegion> RenderRegionReceived;
 
