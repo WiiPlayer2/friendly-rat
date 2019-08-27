@@ -21,7 +21,7 @@ namespace FriendlyRAT.Testing
             control.Init();
 
             var rand = new Random();
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 5; i++)
             {
                 Thread.Sleep(1000);
                 var pos = new Point(rand.Next(100), rand.Next(100));

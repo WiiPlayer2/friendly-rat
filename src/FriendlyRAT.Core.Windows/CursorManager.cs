@@ -7,7 +7,7 @@ namespace FriendlyRAT.Core.Windows
     using System.ComponentModel;
     using System.Drawing;
 
-    public static class CursorManager
+    internal static class CursorManager
     {
         public static Point GetCursor()
         {
