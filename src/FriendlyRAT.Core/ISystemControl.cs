@@ -7,7 +7,11 @@ namespace FriendlyRAT.Core
     {
         event EventHandler<RenderRegion> RenderRegionReceived;
 
+        event EventHandler<Point> CursorLocationReceived; 
+
         void SetRegion(Rectangle region);
+
+        void SetCursorLocation(Point point);
 
         void Init();
     }

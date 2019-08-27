@@ -9,6 +9,7 @@ namespace FriendlyRAT.Core.Windows
     public class WindowsSystemControl : ISystemControl
     {
         public event EventHandler<RenderRegion> RenderRegionReceived = (sender, region) => { };
+        public event EventHandler<Point> CursorLocationReceived = (sender, point) => { };
 
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -34,9 +35,16 @@ namespace FriendlyRAT.Core.Windows
             Task.Run(this.Run);
         }
 
-        private async Task Run()
+        private Task Run() =>
+            Task.WhenAll(
+                this.loop.Run(RenderLoopAsync, this.cancellationTokenSource.Token),
+                this.loop.Run(CursorLoopAsync, this.cancellationTokenSource.Token));
+
+        private Task CursorLoopAsync()
         {
-            await Task.WhenAll(this.loop.Run(RenderLoopAsync, this.cancellationTokenSource.Token));
+            var pos = CursorManager.GetCursor();
+            CursorLocationReceived(this, pos);
+            return Task.CompletedTask;
         }
 
         private Task RenderLoopAsync()
@@ -48,5 +56,7 @@ namespace FriendlyRAT.Core.Windows
         }
 
         public void SetRegion(Rectangle region) => this.renderRegion = region;
+
+        public void SetCursorLocation(Point point) => CursorManager.SetCursor(point);
     }
 }
